@@ -6,22 +6,16 @@ def CreateTensor():
     # create Tensor
     # torch.Tensor(sequence)
     print("Create Tensor Test:")
-    tensor_a = torch.Tensor([1, 2, 3, 4, 5])
-    print(tensor_a)
+    tensor_a=torch.tensor(data=[1, 2, 3, 4, 5],dtype=torch.float32,requires_grad=False)
+    print("tensor_a:",tensor_a)
     print("size of tensor_a:", tensor_a.size())
     print("size of tensor_a:", tensor_a.shape)
     print("first dimension of tensor_a:", tensor_a.shape[0])
 
     # torch.Tensor(size)
-    tensor_b = torch.FloatTensor(3, 3).zero_()  # 3x3 and value=0
-    print(tensor_b)
+    tensor_b = torch.zeros(size=(3,3),dtype=torch.int32,requires_grad=False)
+    print("tensor_b:",tensor_b)
     print("shape of tensor_b:", tensor_b.size())
-
-    # torch.Tensor(ndarray)
-    c = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-    tensor_c = torch.FloatTensor(c)
-    print(tensor_c)
-    print("shape of tensor_c:", tensor_c.size())
 
 
 def ndarray2tensor():
