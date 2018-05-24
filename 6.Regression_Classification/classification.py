@@ -106,17 +106,39 @@ def train(X,y):
         print("----average loss:",sum(epoch_loss)/len(epoch_loss))
         print("----average accuracy:",sum(epoch_accuracy)/len(epoch_accuracy))
 
+    #save models
+    #method 1:save whole model
+    torch.save(obj=model,f="whole_model.pkl")
+    #method 2:save parameters
+    torch.save(obj=model.state_dict(),f="parameters_model.pkl")
+
 
 #test
+def test(X,y):
+    #load model
+    #method1:load whole model
+    model=torch.load(f="whole_model.pkl")
+    #print(model)
+    logits=model.forward(input=X)
+    prediction = torch.argmax(input=logits, dim=1)
+    accuracy = accuracy_score(y_true=y.cpu(), y_pred=prediction.cpu().numpy())
+    print("accuracy:",accuracy)
+
 
 
 if __name__=="__main__":
     print("Loading Data")
-    X_train, y_train, X_valid, y_valid, X_test=load_mnist(path="../data/MNIST/")
-    #trans to tensors
-    X_train=torch.from_numpy(X_train).cuda()
+    X_train, y_train, X_valid, y_valid, X_test = load_mnist(path="../data/MNIST/")
+    # trans to tensors
+    X_train = torch.from_numpy(X_train).cuda()
     y_train = torch.from_numpy(y_train).cuda()
+    X_valid = torch.from_numpy(X_valid).cuda()
+    y_valid = torch.from_numpy(y_valid).cuda()
 
-    #training
+    # Training
     print("Training Start!")
-    train(X=X_train,y=y_train)
+    train(X=X_train, y=y_train)
+
+    #Testing
+    print("Test Start!")
+    test(X=X_valid,y=y_valid)
