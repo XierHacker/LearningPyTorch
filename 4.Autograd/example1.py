@@ -1,6 +1,8 @@
 '''
 进行一个简单线性拟合的例子，不使用任何框架，手动求导
 '''
+
+
 import numpy as np
 
 
@@ -25,5 +27,20 @@ for it in range(500):
     # compute loss
     loss = np.square(y_pred - y).sum()
     print(it, loss)
+
+    # Backward pass
+    # compute the gradient
+    grad_y_pred = 2.0 * (y_pred - y)
+    grad_w2 = h_relu.T.dot(grad_y_pred)
+    grad_h_relu = grad_y_pred.dot(w2.T)
+    grad_h = grad_h_relu.copy()
+    grad_h[h < 0] = 0
+    grad_w1 = x.T.dot(grad_h)
+
+    # update weights of w1 and w2
+    w1 -= LEARNING_RATE * grad_w1
+    w2 -= LEARNING_RATE * grad_w2
+
+
 
 
